@@ -93,7 +93,8 @@ extern "C"
                     break;
                 case AESM_GET_LICENSETOKEN_ERROR:
                     // printf("########## sgx_uae_service.cpp > line:97 > AESM_GET_LICENSETOKEN_ERROR \n");
-                    mapped = SGX_ERROR_SERVICE_INVALID_PRIVILEGE_FAKE;
+                    // mapped = SGX_ERROR_SERVICE_INVALID_PRIVILEGE_FAKE;
+                    mapped = SGX_ERROR_SERVICE_INVALID_PRIVILEGE;
                     break;
                 case AESM_OUT_OF_EPC:
                     mapped = SGX_ERROR_OUT_OF_EPC;
