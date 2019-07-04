@@ -72,6 +72,8 @@ int EnclaveCreatorHW::error_driver2urts(int driver_error)
 {
     int ret = SGX_ERROR_UNEXPECTED;
 
+    SE_TRACE(SE_TRACE_DEBUG, "@error_driver2urts() api_error = 0x04%x\n", api_error);
+
     switch (driver_error)
     {
     case SGX_INVALID_ATTRIBUTE:
@@ -118,7 +120,7 @@ int EnclaveCreatorHW::error_api2urts(uint32_t api_error)
 {
     int ret = SGX_ERROR_UNEXPECTED;
 
-    printf("@EnclaveCreatorHW() api_error = 0x04%x\n", api_error);
+    SE_TRACE(SE_TRACE_DEBUG, "@error_api2urts() api_error = 0x04%x\n", api_error);
 
     switch (api_error)
     {
@@ -168,6 +170,8 @@ int EnclaveCreatorHW::error_api2urts(uint32_t api_error)
 
 int EnclaveCreatorHW::create_enclave(secs_t *secs, sgx_enclave_id_t *enclave_id, void **start_addr, bool ae)
 {
+    SE_TRACE(SE_TRACE_WARNING, "@EnclaveCreatorHW::create_enclave() \n");
+
     assert(secs != NULL && enclave_id != NULL && start_addr != NULL);
     UNUSED(ae);
 
@@ -185,6 +189,7 @@ int EnclaveCreatorHW::create_enclave(secs_t *secs, sgx_enclave_id_t *enclave_id,
     *start_addr = enclave_base;
     *enclave_id = se_atomic_inc64(&g_eid);
 
+    SE_TRACE(SE_TRACE_WARNING, "@EnclaveCreatorHW::create_enclave() enclave_id=%#x\n", enclave_id);
     return error_api2urts(enclave_error);
 }
 
