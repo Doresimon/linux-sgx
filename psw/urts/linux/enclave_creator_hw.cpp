@@ -72,7 +72,7 @@ int EnclaveCreatorHW::error_driver2urts(int driver_error)
 {
     int ret = SGX_ERROR_UNEXPECTED;
 
-    SE_TRACE(SE_TRACE_DEBUG, "@error_driver2urts() api_error = 0x04%x\n", api_error);
+    SE_TRACE(SE_TRACE_DEBUG, "@error_driver2urts() api_error = 0x04%x\n", driver_error);
 
     switch (driver_error)
     {
