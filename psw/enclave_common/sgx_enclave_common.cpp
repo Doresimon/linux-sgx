@@ -501,7 +501,7 @@ extern "C" bool COMM_API enclave_initialize(
         if (0 == enclave_css->header.hw_version)
         {
             sgx_status_t status = get_launch_token(enclave_css, &it->second, &launch_token);
-            SE_TRACE(SE_TRACE_DEBUG, "\n@sgx_enclave_common.cpp:504 > enclave_initialize() >  status = %#x\n", status);
+            SE_TRACE(SE_TRACE_DEBUG, "\n@%s:%d > status = %#x\n", __FILE__, __LINE__, status);
 
             if (status != SGX_SUCCESS)
             {

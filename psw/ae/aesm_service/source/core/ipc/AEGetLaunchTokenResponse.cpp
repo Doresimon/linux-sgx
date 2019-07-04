@@ -30,33 +30,30 @@
  */
 #include <AEGetLaunchTokenResponse.h>
 
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <limits.h>
 #include <IAEMessage.h>
 
-AEGetLaunchTokenResponse::AEGetLaunchTokenResponse() :
-    m_response(NULL)
+AEGetLaunchTokenResponse::AEGetLaunchTokenResponse() : m_response(NULL)
 {
 }
 
-AEGetLaunchTokenResponse::AEGetLaunchTokenResponse(aesm::message::Response::GetLaunchTokenResponse& response) :
-    m_response(NULL)
+AEGetLaunchTokenResponse::AEGetLaunchTokenResponse(aesm::message::Response::GetLaunchTokenResponse &response) : m_response(NULL)
 {
     m_response = new aesm::message::Response::GetLaunchTokenResponse(response);
 }
 
-AEGetLaunchTokenResponse::AEGetLaunchTokenResponse(uint32_t errorCode, uint32_t tokenLength, const uint8_t* token) : 
-    m_response(NULL)
+AEGetLaunchTokenResponse::AEGetLaunchTokenResponse(uint32_t errorCode, uint32_t tokenLength, const uint8_t *token) : m_response(NULL)
 {
     m_response = new aesm::message::Response::GetLaunchTokenResponse();
     m_response->set_errorcode(errorCode);
-    if (tokenLength!= 0 && token != NULL)
+    if (tokenLength != 0 && token != NULL)
         m_response->set_token(token, tokenLength);
 }
 
-AEGetLaunchTokenResponse::AEGetLaunchTokenResponse(const AEGetLaunchTokenResponse& other) : 
-    m_response(NULL)
+AEGetLaunchTokenResponse::AEGetLaunchTokenResponse(const AEGetLaunchTokenResponse &other) : m_response(NULL)
 {
     if (other.m_response != NULL)
         m_response = new aesm::message::Response::GetLaunchTokenResponse(*other.m_response);
@@ -67,17 +64,18 @@ AEGetLaunchTokenResponse::~AEGetLaunchTokenResponse()
     ReleaseMemory();
 }
 
-AEMessage* AEGetLaunchTokenResponse::serialize()
+AEMessage *AEGetLaunchTokenResponse::serialize()
 {
     AEMessage *ae_msg = NULL;
 
     aesm::message::Response msg;
     if (check())
     {
-        aesm::message::Response::GetLaunchTokenResponse* mutableRes = msg.mutable_getlictokenres();
+        aesm::message::Response::GetLaunchTokenResponse *mutableRes = msg.mutable_getlictokenres();
         mutableRes->CopyFrom(*m_response);
 
-        if (msg.ByteSize() <= INT_MAX) {
+        if (msg.ByteSize() <= INT_MAX)
+        {
             ae_msg = new AEMessage;
             ae_msg->size = (unsigned int)msg.ByteSize();
             ae_msg->data = new char[ae_msg->size];
@@ -87,7 +85,7 @@ AEMessage* AEGetLaunchTokenResponse::serialize()
     return ae_msg;
 }
 
-bool AEGetLaunchTokenResponse::inflateWithMessage(AEMessage* message)
+bool AEGetLaunchTokenResponse::inflateWithMessage(AEMessage *message)
 {
     aesm::message::Response msg;
     msg.ParseFromArray(message->data, message->size);
@@ -100,8 +98,12 @@ bool AEGetLaunchTokenResponse::inflateWithMessage(AEMessage* message)
     return true;
 }
 
-bool AEGetLaunchTokenResponse::GetValues(uint32_t* result, uint8_t* token, uint32_t tokenLength) const
+bool AEGetLaunchTokenResponse::GetValues(uint32_t *result, uint8_t *token, uint32_t tokenLength) const
 {
+    printf("\n##############\n");
+    printf("\n@AEGetLaunchTokenResponse::GetValues() > hasToken: 0x%#x \n", m_response->has_token());
+    printf("\n##############\n");
+
     if (m_response->has_token() && token != NULL)
     {
         if (m_response->token().size() <= tokenLength)
@@ -109,13 +111,12 @@ bool AEGetLaunchTokenResponse::GetValues(uint32_t* result, uint8_t* token, uint3
         else
             return false;
     }
-    *result = m_response->errorcode(); 
+    *result = m_response->errorcode();
     return true;
-
 }
-        //operators
+//operators
 
-AEGetLaunchTokenResponse& AEGetLaunchTokenResponse::operator=(const AEGetLaunchTokenResponse& other)
+AEGetLaunchTokenResponse &AEGetLaunchTokenResponse::operator=(const AEGetLaunchTokenResponse &other)
 {
     if (this == &other)
         return *this;
@@ -128,7 +129,7 @@ AEGetLaunchTokenResponse& AEGetLaunchTokenResponse::operator=(const AEGetLaunchT
     return *this;
 }
 
-        //checks
+//checks
 bool AEGetLaunchTokenResponse::check()
 {
     if (m_response == NULL)
@@ -138,10 +139,9 @@ bool AEGetLaunchTokenResponse::check()
 
 void AEGetLaunchTokenResponse::ReleaseMemory()
 {
-   if (m_response != NULL)
+    if (m_response != NULL)
     {
         delete m_response;
         m_response = NULL;
     }
 }
-
