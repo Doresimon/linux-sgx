@@ -102,6 +102,7 @@ bool AEGetLaunchTokenResponse::GetValues(uint32_t *result, uint8_t *token, uint3
 {
     printf("\n##############\n");
     printf("\n@AEGetLaunchTokenResponse::GetValues() > hasToken: 0x%#x \n", m_response->has_token());
+    printf("\n@AEGetLaunchTokenResponse::GetValues() > errorcode: 0x%#x \n", m_response->errorcode());
     printf("\n##############\n");
 
     if (m_response->has_token() && token != NULL)
